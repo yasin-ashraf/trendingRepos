@@ -11,12 +11,20 @@ import com.yasin.trendingrepos.network.GithubServices
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
+import java.util.concurrent.Executor
+import java.util.concurrent.Executors
 
 /**
  * Created by Yasin on 28/4/20.
  */
 @Module(includes = [ContextModule::class])
 class ApplicationModule {
+
+    @Provides
+    @AppScope
+    fun provideExecutor(): Executor? {
+        return Executors.newSingleThreadExecutor()
+    }
 
     @Provides
     @AppScope

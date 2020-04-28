@@ -1,4 +1,4 @@
-package com.yasin.trendingrepos.ui
+package com.yasin.trendingrepos.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater

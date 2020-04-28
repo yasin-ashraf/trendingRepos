@@ -18,7 +18,7 @@ class RetrofitModule {
     @AppScope
     fun retrofit(okHttpClient: OkHttpClient, gson: Gson): Retrofit {
         /* INFO: BASE URL FOR APP*/
-        val baseUrl = ""
+        val baseUrl = "https://api.github.com"
 
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(gson))
