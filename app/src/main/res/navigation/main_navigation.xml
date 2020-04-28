@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main_navigation">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/homeScreen">
 
+    <fragment
+        android:id="@+id/homeScreen"
+        android:name="com.yasin.trendingrepos.ui.home.HomeScreen"
+        android:label="Home"
+        tools:layout="@layout/screen_home"/>
 </navigation>

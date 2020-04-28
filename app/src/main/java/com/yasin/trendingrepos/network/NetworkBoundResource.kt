@@ -13,6 +13,7 @@ import retrofit2.Response
 
 abstract class NetworkBoundResource<ResultType, RequestType>
 @MainThread protected constructor() {
+
     private val result: MediatorLiveData<NetworkState<ResultType>> =
         MediatorLiveData<NetworkState<ResultType>>()
 
@@ -25,6 +26,7 @@ abstract class NetworkBoundResource<ResultType, RequestType>
                 call: Call<RequestType>,
                 response: Response<RequestType>
             ) {
+                Log.d("SUCCESS FETCHING DATA", response.message())
                 result.removeSource(dbSource)
                 if (response.isSuccessful) {
                     saveResultAndReInit(response.body())

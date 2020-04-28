@@ -24,6 +24,5 @@ class ReposActivity : AppCompatActivity() {
     val navHostFragment: NavHostFragment =
       supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
     navController = navHostFragment.navController
-    NavigationUI.setupActionBarWithNavController(this,navController)
   }
 }

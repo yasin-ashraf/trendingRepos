@@ -1,6 +1,9 @@
 package com.yasin.trendingrepos.ui
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.yasin.trendingrepos.data.dataBase.entity.SearchResultDb
+import com.yasin.trendingrepos.network.NetworkState
 import javax.inject.Inject
 
 /**
@@ -10,8 +13,8 @@ class ReposViewModel @Inject constructor(
     private val repository: ReposRepository
 ) : ViewModel() {
 
-    fun searchRepos(searchQuery : String) {
-        repository.getReposForSearchQuery(searchQuery)
+    fun searchRepos(searchQuery : String) : LiveData<NetworkState<SearchResultDb>>{
+        return repository.getReposForSearchQuery(searchQuery)
     }
 
 }

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/iv_logo"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/logo"
+                app:layout_constraintEnd_toStartOf="@id/tv_repo_name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_repo_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="square.retrofit"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                android:textColor="?attr/colorSecondary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_logo"
+                app:layout_constraintTop_toTopOf="@id/iv_logo" />
+
+            <TextView
+                android:id="@+id/tv_repo_updated_at"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="April 28, 2020 "
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:textColor="?attr/colorSecondaryVariant"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_logo"
+                app:layout_constraintBottom_toBottomOf="@id/iv_logo"
+                app:layout_constraintVertical_bias="1"
+                app:layout_constraintTop_toBottomOf="@id/tv_repo_name" />
+
+            <TextView
+                android:id="@+id/tv_repo_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="20dp"
+                android:ellipsize="end"
+                android:maxLines="5"
+                android:text="Type Safe HTTP Client for Java and Android by Square"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:textColor="?attr/colorSecondaryVariant"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/iv_logo"
+                app:layout_constraintTop_toBottomOf="@id/iv_logo" />
+
+            <TextView
+                android:id="@+id/tv_repo_language"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="10dp"
+                android:ellipsize="end"
+                android:maxLines="5"
+                android:text="Kotlin / Java"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:textColor="?attr/colorSecondaryVariant"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/iv_logo"
+                app:layout_constraintTop_toBottomOf="@id/tv_repo_description" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</FrameLayout>
