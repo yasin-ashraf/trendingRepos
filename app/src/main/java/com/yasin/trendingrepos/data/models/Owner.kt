@@ -1,4 +1,4 @@
-package com.yasin.trendingrepos.models
+package com.yasin.trendingrepos.data.models
 
 import com.google.gson.annotations.SerializedName
 

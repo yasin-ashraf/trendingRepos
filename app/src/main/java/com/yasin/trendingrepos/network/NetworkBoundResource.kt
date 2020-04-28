@@ -76,6 +76,7 @@ abstract class NetworkBoundResource<ResultType, RequestType>
 
     @MainThread
     protected abstract fun onFetchFailed()
+
     val asLiveData: LiveData<NetworkState<ResultType>>
         get() = result
 

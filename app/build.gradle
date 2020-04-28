@@ -55,6 +55,9 @@ dependencies {
   //Dagger
   implementation "com.google.dagger:dagger:${library.dagger}"
   kapt "com.google.dagger:dagger-compiler:${library.dagger}"
+  //Room
+  implementation "androidx.room:room-runtime:${library.room}"
+  kapt "androidx.room:room-compiler:${library.room}"
   //test
   testImplementation 'junit:junit:4.12'
   androidTestImplementation 'androidx.test.ext:junit:1.1.1'

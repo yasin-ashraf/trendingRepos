@@ -1,6 +1,6 @@
 package com.yasin.trendingrepos.network
 
-import com.yasin.trendingrepos.models.RepoSearchResult
+import com.yasin.trendingrepos.data.models.RepoSearchResult
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
