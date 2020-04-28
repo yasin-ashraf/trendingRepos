@@ -1,18 +1,17 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
-  compileSdkVersion 29
-  buildToolsVersion "29.0.3"
-
+  compileSdkVersion versions.compileSdk
+  buildToolsVersion versions.buildTools
   defaultConfig {
-    applicationId "com.yasin.trendingrepos"
-    minSdkVersion 21
-    targetSdkVersion 29
-    versionCode 1
-    versionName "1.0"
-
+    applicationId names.applicationId
+    minSdkVersion versions.minSdk
+    targetSdkVersion versions.targetSdk
+    versionCode versions.versionCode
+    versionName versions.versionName
     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
   }
 
@@ -22,15 +21,46 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
     }
   }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+  viewBinding {
+    enabled = true
+  }
+
+  kotlinOptions {
+    jvmTarget = "1.8"
+  }
 }
 
 dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])
-  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-  implementation 'androidx.appcompat:appcompat:1.1.0'
-  implementation 'androidx.core:core-ktx:1.2.0'
-  implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+  implementation "androidx.appcompat:appcompat:${library.appCompat}"
+  implementation "androidx.core:core-ktx:${library.ktx}"
+  implementation "androidx.constraintlayout:constraintlayout:${library.constarintLayout}"
+  implementation "com.google.android.material:material:${library.material}"
+  //Lifecycle
+  implementation "androidx.lifecycle:lifecycle-extensions:${library.lifeCycle}"
+  kapt "androidx.lifecycle:lifecycle-compiler:${library.lifeCycle}"
+  //Navigation
+  implementation "androidx.navigation:navigation-fragment-ktx:${library.navigation}"
+  implementation "androidx.navigation:navigation-ui-ktx:${library.navigation}"
+  //Gson
+  implementation 'com.google.code.gson:gson:2.8.6'
+  //Picasso
+  implementation 'com.squareup.picasso:picasso:2.71828'
+  //Dagger
+  implementation "com.google.dagger:dagger:${library.dagger}"
+  kapt "com.google.dagger:dagger-compiler:${library.dagger}"
+  //test
   testImplementation 'junit:junit:4.12'
   androidTestImplementation 'androidx.test.ext:junit:1.1.1'
   androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+  //network
+  implementation 'com.squareup.okhttp3:logging-interceptor:4.5.0'
+  implementation "com.squareup.retrofit2:retrofit:${library.retrofit}"
+  implementation "com.squareup.retrofit2:converter-gson:${library.retrofit}"
 }
