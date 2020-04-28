@@ -1,9 +1,9 @@
 package com.yasin.trendingrepos.di
 
-import com.yasin.trendingrepos.di.modules.ApplicationModule
-import com.yasin.trendingrepos.di.modules.ContextModule
-import com.yasin.trendingrepos.di.modules.NetworkModule
-import com.yasin.trendingrepos.di.modules.RetrofitModule
+import android.content.Context
+import com.yasin.trendingrepos.di.modules.*
+import com.yasin.trendingrepos.ui.home.HomeScreen
+import dagger.BindsInstance
 import dagger.Component
 
 /**
@@ -11,8 +11,17 @@ import dagger.Component
  */
 @AppScope
 @Component(
-    modules = [ApplicationModule::class,ContextModule::class,NetworkModule::class,RetrofitModule::class]
+    modules = [ApplicationModule::class,ContextModule::class,NetworkModule::class,RetrofitModule::class,
+    DatabaseModule::class]
 )
 interface AppComponent {
+
+    fun injectHomeScreen(homeScreen: HomeScreen)
+
+    @Component.Builder
+    interface Builder {
+        fun build() : AppComponent
+        @BindsInstance fun context(@ApplicationContext context: Context) : Builder
+    }
 
 }

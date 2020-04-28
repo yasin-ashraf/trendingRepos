@@ -22,8 +22,8 @@ class ApplicationModule {
 
     @Provides
     @AppScope
-    fun provideExecutor(): Executor? {
-        return Executors.newSingleThreadExecutor()
+    fun provideExecutor(): Executor {
+        return Executors.newCachedThreadPool()
     }
 
     @Provides

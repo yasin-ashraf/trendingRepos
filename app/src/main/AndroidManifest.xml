@@ -8,6 +8,7 @@
       android:label="@string/app_name"
       android:roundIcon="@mipmap/ic_launcher_round"
       android:supportsRtl="true"
+      android:name=".TrendingRepos"
       android:theme="@style/Theme.TrRepos">
     <activity android:name=".ui.ReposActivity">
       <intent-filter>
