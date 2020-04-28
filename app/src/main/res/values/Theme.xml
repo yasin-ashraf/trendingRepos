@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.TrRepos" parent="Theme.TrRepos.Base"/>
+
+    <style name="Theme.TrRepos.Base" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+        <item name="colorPrimary">@color/licious_black_96</item>
+        <item name="colorSecondary">@color/licious_black_26</item>
+        <item name="colorAccent">@color/licious_red</item>
+        <item name="colorSecondaryVariant">@color/licious_black_42</item>
+
+        <item name="android:colorBackground">@color/licious_black_96</item>
+        <item name="colorSurface">@color/licious_black_96</item>
+        <item name="colorPrimarySurface">@color/licious_black_96</item>
+        <item name="colorError">@color/licious_red</item>
+
+        <item name="colorOnPrimary">@color/licious_black_26</item>
+        <item name="colorOnSecondary">@color/licious_black_96</item>
+        <item name="colorOnBackground">@color/licious_black_26</item>
+        <item name="colorOnSurface">@color/licious_black_26</item>
+        <item name="colorOnError">@color/licious_black_96</item>
+
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/navigationBar_color</item>
+
+    </style>
+
+</resources>

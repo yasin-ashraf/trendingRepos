@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="colorPrimary">#6200EE</color>
-  <color name="colorPrimaryDark">#3700B3</color>
-  <color name="colorAccent">#03DAC5</color>
+
+  <!--Main Colors Palette-->
+  <color name="licious_black_96">#f4f4f4</color>
+  <color name="licious_black_86">#dadbda</color>
+  <color name="licious_black_75">#c0c1c0</color>
+  <color name="licious_black_62">#9ea09e</color>
+  <color name="licious_black_50">#7c7e7c</color>
+  <color name="licious_black_42">#6b6d6b</color>
+  <color name="licious_black_36">#5a5c5a</color>
+  <color name="licious_black_26">#414241</color>
+  <color name="licious_black_19">#303130</color>
+  <color name="licious_black_16">#282828</color>
+  <color name="licious_black_6">#0e0f0e</color>
+
+  <color name="licious_red">#ff5454</color>
+  <color name="navigationBar_color">#62414241</color>
+
 </resources>
