@@ -86,6 +86,9 @@ class HomeScreen : Fragment() {
         }
         addEditorActionListener()
         reposViewModel.searchRepository("Kotlin")
+        binding.buttonRetry.setOnClickListener {
+            reposViewModel.forceRefresh(true)
+        }
     }
 
     private fun addEditorActionListener() {

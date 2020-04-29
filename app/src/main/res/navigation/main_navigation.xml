@@ -13,7 +13,10 @@
         <action
             android:id="@+id/action_homeScreen_to_detailsScreen"
             app:destination="@id/detailsScreen"
-            app:launchSingleTop="true" />
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:launchSingleTop="true"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/detailsScreen"

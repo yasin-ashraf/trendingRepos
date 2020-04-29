@@ -57,7 +57,7 @@
         android:id="@+id/card_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_margin="10dp"
         app:strokeWidth="1dp"
         app:strokeColor="?attr/colorSecondaryVariant"
         app:layout_constraintStart_toStartOf="parent"
@@ -172,14 +172,60 @@
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_repos"
+        android:id="@+id/rv_contributors"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:paddingHorizontal="10dp"
         android:paddingVertical="10dp"
         android:clipToPadding="false"
         app:layout_constraintTop_toBottomOf="@id/label"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/list_item_contributor"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/rv_contributors"
+        app:layout_constraintEnd_toEndOf="@id/rv_contributors"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/rv_contributors"/>
+
+    <LinearLayout
+        android:id="@+id/error_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone"
+        android:background="?attr/colorSurface"
+        app:layout_constraintStart_toStartOf="@id/rv_contributors"
+        app:layout_constraintEnd_toEndOf="@id/rv_contributors"
+        app:layout_constraintTop_toTopOf="@id/rv_contributors"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/colorSecondary"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            android:text="@string/something_went_terribly_wrong"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_retry"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:textAllCaps="false"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            android:backgroundTint="?attr/colorError"
+            android:textColor="?attr/colorOnError"
+            android:text="@string/retry"/>
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

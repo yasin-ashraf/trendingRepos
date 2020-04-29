@@ -13,6 +13,7 @@ import com.squareup.picasso.Picasso
 import com.yasin.trendingrepos.R
 import com.yasin.trendingrepos.databinding.ScreenDetailsBinding
 import com.yasin.trendingrepos.getAppComponent
+import com.yasin.trendingrepos.network.NetworkState
 import com.yasin.trendingrepos.utils.REPOSITORY_ID
 import com.yasin.trendingrepos.utils.dateToFormat
 import javax.inject.Inject
@@ -26,6 +27,10 @@ class DetailsScreen : Fragment() {
     @Inject lateinit var picasso: Picasso
     private lateinit var detailsViewModel: DetailsViewModel
     private lateinit var binding : ScreenDetailsBinding
+    private val contributorsAdapter : ContributorsAdapter by lazy {
+        ContributorsAdapter(picasso,onItemSelectListener)
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,17 +44,34 @@ class DetailsScreen : Fragment() {
     }
 
     private fun observeContributors() {
-
+        detailsViewModel.contributors.observe(this.viewLifecycleOwner, Observer {
+            when(it) {
+                is NetworkState.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                    binding.errorLayout.visibility = View.INVISIBLE
+                }
+                is NetworkState.Error -> {
+                    binding.progressBar.visibility = View.INVISIBLE
+                    binding.errorLayout.visibility = View.VISIBLE
+                }
+                is NetworkState.Success -> {
+                    binding.progressBar.visibility = View.INVISIBLE
+                    binding.errorLayout.visibility = View.GONE
+                    contributorsAdapter.submitList(it.data)
+                }
+            }
+        })
     }
 
     private fun observeDetails() {
         detailsViewModel.repoDetailsDb.observe(this.viewLifecycleOwner, Observer { repo ->
             if(repo != null) {
-                binding.tvRepoName.text = repo.fullName
+                binding.tvRepoName.text = repo.name
                 binding.tvRepoUpdatedAt.text = repo.pushedAt.dateToFormat()
                 binding.tvRepoLanguage.text = repo.language
                 binding.tvRepoDescription.text = repo.description
                 binding.tvRepoWatchers.text = repo.watchersCount.toString()
+                binding.title.text = repo.fullName
                 picasso.load(repo.owner?.avatarUrl)
                     .placeholder(R.drawable.logo)
                     .fit()
@@ -80,7 +102,20 @@ class DetailsScreen : Fragment() {
     }
 
     private fun init() {
-        binding.ivBackButton.setOnClickListener { findNavController().navigateUp() }
+        binding.ivBackButton.setOnClickListener { activity?.onBackPressed() }
         Log.d(REPOSITORY_ID,(arguments?.getInt(REPOSITORY_ID) ?: 0).toString())
+        binding.rvContributors.adapter = contributorsAdapter
+        binding.buttonRetry.setOnClickListener {
+            detailsViewModel.refresh()
+        }
     }
+
+    private val onItemSelectListener : OnItemSelectListener = object : OnItemSelectListener {
+        override fun onSelect(id: Int) {
+            val bundle = Bundle()
+            bundle.putInt(REPOSITORY_ID,id)
+            //navigate
+        }
+    }
+
 }

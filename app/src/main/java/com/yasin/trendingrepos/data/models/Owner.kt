@@ -38,5 +38,8 @@ data class Owner(
     @SerializedName("node_id")
     val nodeId: String? = "",
     @SerializedName("organizations_url")
-    val organizationsUrl: String? = ""
+    val organizationsUrl: String? = "",
+    @SerializedName("contributions")
+    val contributions: String? = ""
+
 )

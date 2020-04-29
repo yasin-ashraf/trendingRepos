@@ -91,6 +91,7 @@
                     android:text="@string/something_went_terribly_wrong"/>
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_retry"
                     android:layout_width="150dp"
                     android:layout_height="60dp"
                     android:layout_marginTop="20dp"
