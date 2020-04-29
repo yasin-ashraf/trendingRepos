@@ -5,4 +5,5 @@
   <string name="retry">Retry</string>
     <string name="search_for_repo">Tap on search bar to search for Repos.</string>
     <string name="contributors">Contributors</string>
+    <string name="Repositories">Repos</string>
 </resources>

@@ -26,7 +26,7 @@ class ContributorsAdapter(private val picasso: Picasso,
     override fun onBindViewHolder(holder: ReposViewHolder, position: Int) {
         val owner = currentList[position]
         holder.bind(owner, picasso)
-        holder.itemView.setOnClickListener { onItemSelectListener.onSelect(owner.id ?: 0) }
+        holder.itemView.setOnClickListener { onItemSelectListener.onSelect(owner) }
     }
 
 }
@@ -60,5 +60,5 @@ class ReposViewHolder(private val binding: ListItemContributorBinding) :
 }
 
 interface OnItemSelectListener {
-    fun onSelect(id: Int)
+    fun onSelect(owner: Owner)
 }

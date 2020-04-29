@@ -1,7 +1,6 @@
 package com.yasin.trendingrepos.ui.detail
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +10,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.squareup.picasso.Picasso
 import com.yasin.trendingrepos.R
+import com.yasin.trendingrepos.data.models.Owner
 import com.yasin.trendingrepos.databinding.ScreenDetailsBinding
 import com.yasin.trendingrepos.getAppComponent
 import com.yasin.trendingrepos.network.NetworkState
-import com.yasin.trendingrepos.utils.REPOSITORY_ID
-import com.yasin.trendingrepos.utils.dateToFormat
+import com.yasin.trendingrepos.utils.*
 import javax.inject.Inject
 
 /**
@@ -103,7 +102,6 @@ class DetailsScreen : Fragment() {
 
     private fun init() {
         binding.ivBackButton.setOnClickListener { activity?.onBackPressed() }
-        Log.d(REPOSITORY_ID,(arguments?.getInt(REPOSITORY_ID) ?: 0).toString())
         binding.rvContributors.adapter = contributorsAdapter
         binding.buttonRetry.setOnClickListener {
             detailsViewModel.refresh()
@@ -111,10 +109,13 @@ class DetailsScreen : Fragment() {
     }
 
     private val onItemSelectListener : OnItemSelectListener = object : OnItemSelectListener {
-        override fun onSelect(id: Int) {
+        override fun onSelect(owner: Owner) {
             val bundle = Bundle()
-            bundle.putInt(REPOSITORY_ID,id)
-            //navigate
+            bundle.putInt(OWNER_ID,owner.id ?: 0)
+            bundle.putString(OWNER_NAME,owner.login ?: "")
+            bundle.putString(OWNER_REPO_URL,owner.reposUrl ?: "")
+            bundle.putString(OWNER_AVATAR,owner.avatarUrl ?: "")
+            findNavController().navigate(R.id.action_detailsScreen_to_ownerScreen,bundle)
         }
     }
 

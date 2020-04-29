@@ -3,16 +3,15 @@ package com.yasin.trendingrepos.ui
 import androidx.lifecycle.LiveData
 import com.yasin.trendingrepos.data.dataBase.dao.ReposDao
 import com.yasin.trendingrepos.data.dataBase.dao.SearchResultsDao
-import com.yasin.trendingrepos.data.dataBase.entity.OwnerDb
 import com.yasin.trendingrepos.data.dataBase.entity.RepositoryDb
 import com.yasin.trendingrepos.data.dataBase.entity.SearchResultDb
-import com.yasin.trendingrepos.data.models.Owner
 import com.yasin.trendingrepos.data.models.RepoSearchResult
 import com.yasin.trendingrepos.data.models.Repository
 import com.yasin.trendingrepos.network.GithubServices
 import com.yasin.trendingrepos.network.NetworkBoundResource
 import com.yasin.trendingrepos.network.NetworkState
 import com.yasin.trendingrepos.utils.FRESH_TIMEOUT_IN_MINUTES
+import com.yasin.trendingrepos.utils.convertToDb
 import retrofit2.Call
 import java.util.*
 import java.util.concurrent.Executor
@@ -70,7 +69,11 @@ class ReposRepository @Inject constructor(
     private fun getRepositoriesDb(items: List<Repository>?): List<RepositoryDb> {
         val reposDbList = mutableListOf<RepositoryDb>()
         items?.take(10)?.forEach {
-            reposDbList.add(it.convertToDb())
+            reposDbList.add(it.convertToDb().apply {
+                executor.execute {
+                    reposDao.saveSearchResult(this)
+                }
+            })
         }
         return reposDbList
     }
@@ -82,39 +85,6 @@ class ReposRepository @Inject constructor(
             id = searchQuery,
             lastRefresh = Date(),
             repositories = getRepositoriesDb(items)
-        )
-    }
-
-    private fun Repository.convertToDb(): RepositoryDb {
-        val repo =  RepositoryDb(
-            id = id ?: 0,
-            pushedAt = pushedAt ?: "",
-            language = language ?: "",
-            fullName = fullName ?: "",
-            description = description ?: "",
-            watchersCount = watchersCount ?: 0,
-            contributorsUrl = contributorsUrl ?: "",
-            name = name ?: "",
-            owner = owner.convertToDb(),
-            url = url ?: ""
-        )
-        //store repo result
-        executor.execute {
-            reposDao.saveSearchResult(repo)
-        }
-        return repo
-    }
-
-    private fun Owner.convertToDb(): OwnerDb {
-        return OwnerDb(
-            id = id ?: 0,
-            login = login ?: "",
-            reposUrl = reposUrl ?: "",
-            type = type ?: "",
-            url = url ?: "",
-            avatarUrl = avatarUrl ?: "",
-            htmlUrl = htmlUrl ?: "",
-            organizationsUrl = organizationsUrl ?: ""
         )
     }
 

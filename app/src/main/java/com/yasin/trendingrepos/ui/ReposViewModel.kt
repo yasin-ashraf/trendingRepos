@@ -8,6 +8,7 @@ import com.yasin.trendingrepos.network.NetworkState
 import com.yasin.trendingrepos.ui.home.HomeViewState
 import com.yasin.trendingrepos.ui.uiDataModel.OwnerUi
 import com.yasin.trendingrepos.ui.uiDataModel.RepositoryUi
+import com.yasin.trendingrepos.utils.convertToUi
 import java.util.*
 import javax.inject.Inject
 
@@ -60,32 +61,6 @@ class ReposViewModel @Inject constructor(
     fun forceRefresh(refresh : Boolean) {
         if(searchQuery.value.isNullOrBlank()) return
         this.forceRefresh.value = refresh
-    }
-
-    private fun RepositoryDb.convertToUi() : RepositoryUi {
-        return RepositoryUi(
-            id = id,
-            fullName = fullName,
-            pushedAt = pushedAt,
-            language = language,
-            name = name,
-            description = description,
-            owner = owner?.convertToUi(),
-            watchersCount = watchersCount
-        )
-    }
-
-    private fun OwnerDb.convertToUi() : OwnerUi {
-        return OwnerUi(
-            login,
-            reposUrl,
-            type,
-            url,
-            avatarUrl,
-            htmlUrl,
-            id,
-            organizationsUrl
-        )
     }
 
 }
