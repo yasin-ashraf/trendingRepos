@@ -4,4 +4,5 @@
     <string name="something_went_terribly_wrong">Something went terribly wrong !!</string>
   <string name="retry">Retry</string>
     <string name="search_for_repo">Tap on search bar to search for Repos.</string>
+    <string name="contributors">Contributors</string>
 </resources>

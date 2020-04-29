@@ -1,7 +1,8 @@
 package com.yasin.trendingrepos.ui
 
 import androidx.lifecycle.LiveData
-import com.yasin.trendingrepos.data.dataBase.dao.ReposSearchDao
+import com.yasin.trendingrepos.data.dataBase.dao.ReposDao
+import com.yasin.trendingrepos.data.dataBase.dao.SearchResultsDao
 import com.yasin.trendingrepos.data.dataBase.entity.OwnerDb
 import com.yasin.trendingrepos.data.dataBase.entity.RepositoryDb
 import com.yasin.trendingrepos.data.dataBase.entity.SearchResultDb
@@ -23,29 +24,40 @@ import javax.inject.Inject
 class ReposRepository @Inject constructor(
     private val githubServices: GithubServices,
     private val executor: Executor,
-    private val reposSearchDao: ReposSearchDao
+    private val searchResultsDao: SearchResultsDao,
+    private val reposDao: ReposDao
 ) {
 
-    fun getReposForSearchQuery(searchQuery: String, forceRefresh: Boolean) : LiveData<NetworkState<SearchResultDb>> {
+    fun getReposForSearchQuery(
+        searchQuery: String,
+        forceRefresh: Boolean
+    ): LiveData<NetworkState<SearchResultDb>> {
 
         return object : NetworkBoundResource<SearchResultDb, RepoSearchResult>() {
 
             override fun saveCallResult(item: RepoSearchResult?) {
-                reposSearchDao.saveSearchResult(item?.convertToDb(searchQuery) ?: SearchResultDb(searchQuery,Date(), mutableListOf()))
+                //store search result
+                searchResultsDao.saveSearchResult(
+                    item?.convertToDb(searchQuery) ?: SearchResultDb(
+                        searchQuery,
+                        Date(),
+                        mutableListOf()
+                    )
+                )
             }
 
             override fun shouldFetch(data: SearchResultDb?): Boolean {
-                return  forceRefresh ||
+                return forceRefresh ||
                         data == null || //no data found in db for keyword
                         data.lastRefresh.time - Date().time > FRESH_TIMEOUT_IN_MINUTES.toLong()
             }
 
             override fun loadFromDb(): LiveData<SearchResultDb> {
-                return reposSearchDao.getSearchResult(searchQuery)
+                return searchResultsDao.getSearchResult(searchQuery)
             }
 
             override fun createCall(): Call<RepoSearchResult> {
-                return githubServices.getRepos(searchQuery,"stars","desc", 1)
+                return githubServices.getRepos(searchQuery, "stars", "desc", 1)
             }
 
             override fun onFetchFailed() {
@@ -67,27 +79,33 @@ class ReposRepository @Inject constructor(
 
     private fun RepoSearchResult.convertToDb(searchQuery: String): SearchResultDb {
         return SearchResultDb(
-            id =searchQuery ,
+            id = searchQuery,
             lastRefresh = Date(),
             repositories = getRepositoriesDb(items)
         )
     }
 
-    private fun Repository.convertToDb() : RepositoryDb {
-        return RepositoryDb(
-            id = id ?: 1,
+    private fun Repository.convertToDb(): RepositoryDb {
+        val repo =  RepositoryDb(
+            id = id ?: 0,
             pushedAt = pushedAt ?: "",
             language = language ?: "",
             fullName = fullName ?: "",
             description = description ?: "",
             watchersCount = watchersCount ?: 0,
-            subscriptionUrl = subscriptionUrl ?: "",
+            contributorsUrl = contributorsUrl ?: "",
             name = name ?: "",
-            owner = owner.convertToDb()
+            owner = owner.convertToDb(),
+            url = url ?: ""
         )
+        //store repo result
+        executor.execute {
+            reposDao.saveSearchResult(repo)
+        }
+        return repo
     }
 
-    private fun Owner.convertToDb() : OwnerDb {
+    private fun Owner.convertToDb(): OwnerDb {
         return OwnerDb(
             id = id ?: 0,
             login = login ?: "",

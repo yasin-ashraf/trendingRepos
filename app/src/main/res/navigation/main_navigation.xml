@@ -9,5 +9,15 @@
         android:id="@+id/homeScreen"
         android:name="com.yasin.trendingrepos.ui.home.HomeScreen"
         android:label="Home"
-        tools:layout="@layout/screen_home"/>
+        tools:layout="@layout/screen_home">
+        <action
+            android:id="@+id/action_homeScreen_to_detailsScreen"
+            app:destination="@id/detailsScreen"
+            app:launchSingleTop="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsScreen"
+        android:name="com.yasin.trendingrepos.ui.detail.DetailsScreen"
+        android:label="DetailsScreen"
+        tools:layout="@layout/screen_details"/>
 </navigation>

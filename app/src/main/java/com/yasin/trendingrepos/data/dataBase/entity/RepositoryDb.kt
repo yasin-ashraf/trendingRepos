@@ -17,10 +17,11 @@ data class RepositoryDb(
     val fullName: String,
     val description: String,
     val watchersCount: Int,
-    val subscriptionUrl: String,
+    val url: String,
     val name: String,
     @TypeConverters(Converters::class)
-    val owner: OwnerDb?/*,
+    val owner: OwnerDb?,
+    val contributorsUrl: String/*,
 
     val issueCommentUrl: String,
     val forks: Int,

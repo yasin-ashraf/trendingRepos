@@ -2,6 +2,7 @@ package com.yasin.trendingrepos.di
 
 import android.content.Context
 import com.yasin.trendingrepos.di.modules.*
+import com.yasin.trendingrepos.ui.detail.DetailsScreen
 import com.yasin.trendingrepos.ui.home.HomeScreen
 import dagger.BindsInstance
 import dagger.Component
@@ -17,6 +18,7 @@ import dagger.Component
 interface AppComponent {
 
     fun injectHomeScreen(homeScreen: HomeScreen)
+    fun injectDetailScreen(detailsScreen: DetailsScreen)
 
     @Component.Builder
     interface Builder {

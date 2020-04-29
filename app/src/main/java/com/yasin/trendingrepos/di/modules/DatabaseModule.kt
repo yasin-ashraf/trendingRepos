@@ -3,7 +3,8 @@ package com.yasin.trendingrepos.di.modules
 import android.content.Context
 import androidx.room.Room
 import com.yasin.trendingrepos.data.dataBase.ReposDatabase
-import com.yasin.trendingrepos.data.dataBase.dao.ReposSearchDao
+import com.yasin.trendingrepos.data.dataBase.dao.ReposDao
+import com.yasin.trendingrepos.data.dataBase.dao.SearchResultsDao
 import com.yasin.trendingrepos.di.AppScope
 import com.yasin.trendingrepos.utils.DATABASE_NAME
 import dagger.Module
@@ -24,8 +25,14 @@ class DatabaseModule {
 
     @Provides
     @AppScope
-    fun provideFormsDao(reposDatabase: ReposDatabase) : ReposSearchDao {
-        return reposDatabase.reposSearchDao()
+    fun provideFormsDao(reposDatabase: ReposDatabase) : SearchResultsDao {
+        return reposDatabase.searchResultsDao()
+    }
+
+    @Provides
+    @AppScope
+    fun provideReposDao(reposDatabase: ReposDatabase) : ReposDao {
+        return reposDatabase.reposDao()
     }
 
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector android:name="vector"
+    android:width="20dp"
+    android:height="20dp"
+    android:viewportWidth="20"
+    android:viewportHeight="20"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:name="group"
+        android:rotation="90"
+        android:pivotX="10"
+        android:pivotY="10">
+        <path
+            android:name="path_1"
+            android:pathData="M 4 7 L 10 13 L 16 7"
+            android:strokeColor="?attr/colorOnSurface"
+            android:strokeWidth="2"
+            android:strokeLineCap="round"
+            android:strokeLineJoin="round"/>
+    </group>
+</vector>

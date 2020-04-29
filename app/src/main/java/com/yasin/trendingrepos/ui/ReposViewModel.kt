@@ -44,7 +44,7 @@ class ReposViewModel @Inject constructor(
                 it.data?.repositories?.forEach {
                     repositoriesList.add(it.convertToUi())
                 }
-                HomeViewState.Success(repositoriesList)
+                HomeViewState.Success(repositoriesList.sortedByDescending { it.watchersCount })
             }
             is NetworkState.Error -> {
                 HomeViewState.Error(it.message)

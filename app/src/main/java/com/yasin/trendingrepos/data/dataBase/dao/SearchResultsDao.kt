@@ -12,7 +12,7 @@ import java.util.*
  * Created by Yasin on 28/4/20.
  */
 @Dao
-interface ReposSearchDao {
+interface SearchResultsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveSearchResult(result: SearchResultDb)
