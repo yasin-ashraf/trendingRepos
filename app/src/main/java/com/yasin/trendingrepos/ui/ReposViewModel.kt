@@ -1,9 +1,6 @@
 package com.yasin.trendingrepos.ui
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.yasin.trendingrepos.data.dataBase.entity.OwnerDb
 import com.yasin.trendingrepos.data.dataBase.entity.RepositoryDb
 import com.yasin.trendingrepos.data.dataBase.entity.SearchResultDb
@@ -11,6 +8,7 @@ import com.yasin.trendingrepos.network.NetworkState
 import com.yasin.trendingrepos.ui.home.HomeViewState
 import com.yasin.trendingrepos.ui.uiDataModel.OwnerUi
 import com.yasin.trendingrepos.ui.uiDataModel.RepositoryUi
+import java.util.*
 import javax.inject.Inject
 
 /**
@@ -20,10 +18,19 @@ class ReposViewModel @Inject constructor(
     private val repository: ReposRepository
 ) : ViewModel() {
 
+    private val forceRefresh : MutableLiveData<Boolean> = MutableLiveData()
     private val searchQuery : MutableLiveData<String> = MutableLiveData()
+    private val refreshResult = MediatorLiveData<Pair<String, Boolean>>().apply {
+        addSource(forceRefresh) {
+            value = Pair(searchQuery.value ?: "",it)
+        }
+        addSource(searchQuery) {
+            value = Pair(it ?: "",forceRefresh.value ?: false)
+        }
+    }
     private val reposDbResult : LiveData<NetworkState<SearchResultDb>> =
-        Transformations.switchMap(searchQuery) {
-            repository.getReposForSearchQuery(it)
+        Transformations.switchMap(refreshResult) {
+            repository.getReposForSearchQuery(it.first.toLowerCase(Locale.getDefault()), it.second)
         }
     val reposUi : LiveData<HomeViewState> = Transformations.map(reposDbResult) {
         composeUiResult(it)
@@ -34,7 +41,7 @@ class ReposViewModel @Inject constructor(
             is NetworkState.Loading -> HomeViewState.Loading
             is NetworkState.Success -> {
                 val repositoriesList = mutableListOf<RepositoryUi>()
-                it.data.repositories.forEach {
+                it.data?.repositories?.forEach {
                     repositoriesList.add(it.convertToUi())
                 }
                 HomeViewState.Success(repositoriesList)
@@ -48,6 +55,11 @@ class ReposViewModel @Inject constructor(
 
     fun searchRepository(query: String) {
         this.searchQuery.value = query
+    }
+
+    fun forceRefresh(refresh : Boolean) {
+        if(searchQuery.value.isNullOrBlank()) return
+        this.forceRefresh.value = refresh
     }
 
     private fun RepositoryDb.convertToUi() : RepositoryUi {

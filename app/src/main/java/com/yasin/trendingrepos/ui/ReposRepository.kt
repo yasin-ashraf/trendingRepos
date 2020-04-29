@@ -26,20 +26,22 @@ class ReposRepository @Inject constructor(
     private val reposSearchDao: ReposSearchDao
 ) {
 
-    fun getReposForSearchQuery(searchQuery : String) : LiveData<NetworkState<SearchResultDb>> {
+    fun getReposForSearchQuery(searchQuery: String, forceRefresh: Boolean) : LiveData<NetworkState<SearchResultDb>> {
 
         return object : NetworkBoundResource<SearchResultDb, RepoSearchResult>() {
 
             override fun saveCallResult(item: RepoSearchResult?) {
-                reposSearchDao.saveSearchResult(item?.convertToDb() ?: SearchResultDb(1,Date(), mutableListOf()))
+                reposSearchDao.saveSearchResult(item?.convertToDb(searchQuery) ?: SearchResultDb(searchQuery,Date(), mutableListOf()))
             }
 
             override fun shouldFetch(data: SearchResultDb?): Boolean {
-                return (data?.lastRefresh ?: Date()).time - Date().time > FRESH_TIMEOUT_IN_MINUTES.toLong()
+                return  forceRefresh ||
+                        data == null || //no data found in db for keyword
+                        data.lastRefresh.time - Date().time > FRESH_TIMEOUT_IN_MINUTES.toLong()
             }
 
             override fun loadFromDb(): LiveData<SearchResultDb> {
-                return reposSearchDao.getSearchResult()
+                return reposSearchDao.getSearchResult(searchQuery)
             }
 
             override fun createCall(): Call<RepoSearchResult> {
@@ -53,13 +55,6 @@ class ReposRepository @Inject constructor(
         }.asLiveData
     }
 
-    private fun getMaxRefreshTime(currentDate: Date): Date? {
-        val cal = Calendar.getInstance()
-        cal.time = currentDate
-        cal.add(Calendar.MINUTE, -FRESH_TIMEOUT_IN_MINUTES)
-        return cal.time
-    }
-
     private fun getRepositoriesDb(items: List<Repository>?): List<RepositoryDb> {
         val reposDbList = mutableListOf<RepositoryDb>()
         items?.take(10)?.forEach {
@@ -70,9 +65,9 @@ class ReposRepository @Inject constructor(
 
     /** Converters */
 
-    private fun RepoSearchResult.convertToDb() : SearchResultDb {
+    private fun RepoSearchResult.convertToDb(searchQuery: String): SearchResultDb {
         return SearchResultDb(
-            id = 1,
+            id =searchQuery ,
             lastRefresh = Date(),
             repositories = getRepositoriesDb(items)
         )

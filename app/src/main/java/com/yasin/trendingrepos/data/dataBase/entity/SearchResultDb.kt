@@ -12,9 +12,9 @@ import java.util.*
 @Entity
 data class SearchResultDb(
     @PrimaryKey
-    val id : Int, //only one result saved, hence always 1
+    val id : String,
     @TypeConverters(Converters::class)
     val lastRefresh : Date,
     @TypeConverters(Converters::class)
-    val repositories : List<RepositoryDb>
+    val repositories : List<RepositoryDb>?
 )

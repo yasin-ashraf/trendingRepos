@@ -47,14 +47,14 @@ class ReposViewHolder(private val binding: ListItemRepositoryBinding) :
         picasso: Picasso
     ) {
         binding.tvRepoName.text = repo.fullName
-        binding.tvRepoUpdatedAt.text = repo.pushedAt
+        binding.tvRepoUpdatedAt.text = repo.dateToFormat(repo.pushedAt)
         binding.tvRepoLanguage.text = repo.language
         binding.tvRepoDescription.text = repo.description
-        picasso.load(repo.owner?.reposUrl)
+        picasso.load(repo.owner?.avatarUrl)
             .placeholder(R.drawable.logo)
             .fit()
             .centerCrop()
-            .into(binding.ivLogo
-            )
+            .into(binding.ivLogo)
     }
+
 }

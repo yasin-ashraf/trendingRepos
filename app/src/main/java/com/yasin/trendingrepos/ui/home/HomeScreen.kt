@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -38,13 +39,19 @@ class HomeScreen : Fragment() {
         reposViewModel.reposUi.observe(this, Observer {
             when(it) {
                 is HomeViewState.Loading -> {
-                    //show loading state
+                    binding.swipeRefresh.isRefreshing = false
+                    binding.viewFlipper.displayedChild = 0
                 }
                 is HomeViewState.Error -> {
-                    //show error state
+                    binding.swipeRefresh.isRefreshing = false
+                    binding.viewFlipper.displayedChild = 2
                 }
                 is HomeViewState.Success -> {
-                    reposAdapter.submitList(it.repos)
+                    binding.swipeRefresh.isRefreshing = false
+                    if(it.repos.isNotEmpty()) {
+                        binding.viewFlipper.displayedChild = 1
+                        reposAdapter.submitList(it.repos)
+                    }
                 }
             }
         })
@@ -65,7 +72,25 @@ class HomeScreen : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        init()
+    }
+
+    private fun init() {
         binding.rvRepos.adapter = reposAdapter
-        reposViewModel.searchRepository("Kotlin")
+        binding.viewFlipper.displayedChild = 3 //empty state first
+        binding.swipeRefresh.setOnRefreshListener {
+            reposViewModel.forceRefresh(true)
+        }
+        addEditorActionListener()
+    }
+
+    private fun addEditorActionListener() {
+        binding.etSearch.setOnEditorActionListener { textView, actionId, _ ->
+            if(actionId == EditorInfo.IME_ACTION_SEARCH) {
+                reposViewModel.searchRepository(textView.text.toString())
+                return@setOnEditorActionListener true
+            }
+            return@setOnEditorActionListener false
+        }
     }
 }

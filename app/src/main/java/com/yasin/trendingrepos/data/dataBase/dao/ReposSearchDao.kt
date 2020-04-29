@@ -20,8 +20,8 @@ interface ReposSearchDao {
     @Query("DELETE FROM SearchResultDb WHERE id = :id")
     fun deleteSearchResult(id : String)
 
-    @Query("SELECT * FROM SearchResultDb")
-    fun getSearchResult() : LiveData<SearchResultDb>
+    @Query("SELECT * FROM SearchResultDb  WHERE id = :id")
+    fun getSearchResult(id : String) : LiveData<SearchResultDb>
 
     @Query("SELECT * FROM SearchResultDb WHERE lastRefresh > :lastRefreshMax LIMIT 1")
     fun hasSearchResults(lastRefreshMax: Date?): Boolean

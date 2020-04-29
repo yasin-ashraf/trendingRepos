@@ -1,5 +1,8 @@
 package com.yasin.trendingrepos.ui.uiDataModel
 
+import java.text.SimpleDateFormat
+import java.util.*
+
 /**
  * Created by Yasin on 29/4/20.
  */
@@ -30,4 +33,17 @@ data class RepositoryUi(
     val owner: OwnerUi? = null,
     val openIssues: Int = 0,
     val homepage: String = ""
-)
+) {
+
+    fun dateToFormat(dateToFormat: String): String {
+        var formattedDate = ""
+        if (dateToFormat.isNotEmpty() && dateToFormat != "null") {
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("EEE dd MMM yyyy", Locale.getDefault())
+            val date = inputFormat.parse(dateToFormat)
+            formattedDate = outputFormat.format(date)
+        }
+        return formattedDate
+    }
+
+}
