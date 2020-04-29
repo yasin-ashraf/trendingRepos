@@ -11,7 +11,7 @@ buildscript {
             'versionName': "1.0"
     ]
     ext.names = [
-            'applicationId': 'com.yasin.licious'
+            'applicationId': 'com.yasin.trendingrepos'
     ]
     ext.library = [
             'appCompat'       : '1.1.0',

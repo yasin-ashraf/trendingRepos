@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.yasin.trendingrepos.data.dataBase.entity.SearchResultDb
+import java.util.*
 
 /**
  * Created by Yasin on 28/4/20.
@@ -21,5 +22,8 @@ interface ReposSearchDao {
 
     @Query("SELECT * FROM SearchResultDb")
     fun getSearchResult() : LiveData<SearchResultDb>
+
+    @Query("SELECT * FROM SearchResultDb WHERE lastRefresh > :lastRefreshMax LIMIT 1")
+    fun hasSearchResults(lastRefreshMax: Date?): Boolean
 
 }

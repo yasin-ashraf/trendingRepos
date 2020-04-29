@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="appBar_height">70dp</dimen>
+    <dimen name="appBar_height">150dp</dimen>
     <dimen name="searchBox_height">60dp</dimen>
     <dimen name="rv_overlap_height">70dp</dimen>
 

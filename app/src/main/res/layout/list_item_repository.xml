@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_marginBottom="10dp">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="5dp">
+        android:layout_margin="5dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="?attr/colorSecondaryVariant">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -18,7 +22,6 @@
                 android:id="@+id/iv_logo"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/logo"
                 app:layout_constraintEnd_toStartOf="@id/tv_repo_name"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -30,12 +33,12 @@
                 android:layout_marginHorizontal="20dp"
                 android:ellipsize="end"
                 android:lines="1"
-                android:text="square.retrofit"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
                 android:textColor="?attr/colorSecondary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/iv_logo"
-                app:layout_constraintTop_toTopOf="@id/iv_logo" />
+                app:layout_constraintTop_toTopOf="@id/iv_logo"
+                tools:text="square.retrofit" />
 
             <TextView
                 android:id="@+id/tv_repo_updated_at"
@@ -44,14 +47,14 @@
                 android:layout_marginHorizontal="20dp"
                 android:ellipsize="end"
                 android:lines="1"
-                android:text="April 28, 2020 "
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
                 android:textColor="?attr/colorSecondaryVariant"
+                app:layout_constraintBottom_toBottomOf="@id/iv_logo"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/iv_logo"
-                app:layout_constraintBottom_toBottomOf="@id/iv_logo"
+                app:layout_constraintTop_toBottomOf="@id/tv_repo_name"
                 app:layout_constraintVertical_bias="1"
-                app:layout_constraintTop_toBottomOf="@id/tv_repo_name" />
+                tools:text="April 28, 2020 " />
 
             <TextView
                 android:id="@+id/tv_repo_description"
@@ -61,12 +64,12 @@
                 android:layout_marginTop="20dp"
                 android:ellipsize="end"
                 android:maxLines="5"
-                android:text="Type Safe HTTP Client for Java and Android by Square"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
                 android:textColor="?attr/colorSecondaryVariant"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/iv_logo"
-                app:layout_constraintTop_toBottomOf="@id/iv_logo" />
+                app:layout_constraintTop_toBottomOf="@id/iv_logo"
+                tools:text="Type Safe HTTP Client for Java and Android by Square" />
 
             <TextView
                 android:id="@+id/tv_repo_language"
@@ -76,13 +79,13 @@
                 android:layout_marginTop="10dp"
                 android:ellipsize="end"
                 android:maxLines="5"
-                android:text="Kotlin / Java"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
                 android:textColor="?attr/colorSecondaryVariant"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/iv_logo"
-                app:layout_constraintTop_toBottomOf="@id/tv_repo_description" />
+                app:layout_constraintTop_toBottomOf="@id/tv_repo_description"
+                tools:text="Kotlin / Java" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

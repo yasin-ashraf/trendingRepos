@@ -2,6 +2,9 @@ package com.yasin.trendingrepos.data.dataBase.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import com.yasin.trendingrepos.data.dataBase.Converters
+import java.util.*
 
 /**
  * Created by Yasin on 28/4/20.
@@ -9,5 +12,9 @@ import androidx.room.PrimaryKey
 @Entity
 data class SearchResultDb(
     @PrimaryKey
-    val id : String
+    val id : Int, //only one result saved, hence always 1
+    @TypeConverters(Converters::class)
+    val lastRefresh : Date,
+    @TypeConverters(Converters::class)
+    val repositories : List<RepositoryDb>
 )
