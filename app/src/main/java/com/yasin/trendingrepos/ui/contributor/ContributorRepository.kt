@@ -32,13 +32,13 @@ class ContributorRepository @Inject constructor(
             ) {
                 if (response.isSuccessful) {
                     if (!response.body().isNullOrEmpty()) {
-                        response.body()?.forEach {
+                        response.body()?.take(10)?.forEach {
                             executor.execute {
                                 reposDao.saveSearchResult(it.convertToDb())
                             }
                         }
                     }
-                    contributors.value = NetworkState.Success(response.body())
+                    contributors.value = NetworkState.Success(response.body()?.take(10))
                 } else {
                     contributors.value = NetworkState.Error(response.message())
                 }
