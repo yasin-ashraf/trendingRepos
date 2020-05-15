@@ -59,7 +59,13 @@ class ReposRepository @Inject constructor(
                 return githubServices.getRepos(searchQuery, "stars", "desc", 1)
             }
 
-            override fun onFetchFailed() {
+            override fun onFetchFailed(code: Int, body: RepoSearchResult?) {
+                if(code == 207) {
+
+                }
+            }
+
+            override fun onNetworkError(t: Throwable) {
 
             }
 

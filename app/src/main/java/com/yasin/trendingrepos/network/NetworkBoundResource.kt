@@ -31,13 +31,13 @@ abstract class NetworkBoundResource<ResultType, RequestType>
                 if (response.isSuccessful) {
                     saveResultAndReInit(response.body())
                 } else {
-                    onFetchFailed()
+                    onFetchFailed(response.code(),response.body())
                 }
             }
 
             override fun onFailure(call: Call<RequestType>, t: Throwable) {
                 Log.e("ERROR FETCHING DATA", t.toString())
-                onFetchFailed()
+                onNetworkError(t)
                 result.removeSource(dbSource)
                 result.addSource(dbSource) {
                     result.value = NetworkState.Error(t.message ?: "")
@@ -77,7 +77,10 @@ abstract class NetworkBoundResource<ResultType, RequestType>
     protected abstract fun createCall(): Call<RequestType>
 
     @MainThread
-    protected abstract fun onFetchFailed()
+    protected abstract fun onFetchFailed(code: Int, body: RequestType?)
+
+    @MainThread
+    protected abstract fun onNetworkError(t: Throwable)
 
     val asLiveData: LiveData<NetworkState<ResultType>>
         get() = result
